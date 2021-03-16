@@ -20,7 +20,7 @@ main() {
       expect(store.state.visibilityFilter, equals(VisibilityFilter.showAll));
     });
 
-    test('Create/Update/Delete TodoAction', () {
+    test('Create/Update/Delete/Toggle TodoAction', () {
       final store = createStore();
 
       /// Add a todo
@@ -30,6 +30,15 @@ main() {
 
       expect(store.state.todos, isNotEmpty);
       expect(store.state.todos.first.task, equals('Build app'));
+      expect(store.state.todos.first.completed, isFalse);
+
+      /// Toggle a todo
+      store.dispatch(ToggleTodoAction(
+        Todo('Build app'),
+      ));
+
+      expect(store.state.todos, isNotEmpty);
+      expect(store.state.todos.first.completed, isTrue);
 
       /// Update a todo
       store.dispatch(UpdateTodoAction(

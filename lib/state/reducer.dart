@@ -20,6 +20,16 @@ AppState todosReducer(AppState state, dynamic action) {
           if (todo.task == action.todo.task) action.updatedTodo else todo,
       ],
     );
+  } else if (action is ToggleTodoAction) {
+    return state.copyWith(
+      todos: [
+        for (var todo in state.todos)
+          if (todo.task == action.todo.task)
+            todo.copyWith(completed: !todo.completed)
+          else
+            todo,
+      ],
+    );
   } else if (action is SetVisibilityFilter) {
     return state.copyWith(visibilityFilter: action.visibilityFilter);
   } else {

@@ -18,7 +18,7 @@ abstract class AppState with _$AppState {
 abstract class Todo with _$Todo {
   factory Todo(
     String task, {
-    bool completed,
+    @Default(false) bool completed,
   }) = _Todo;
 
   factory Todo.fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);

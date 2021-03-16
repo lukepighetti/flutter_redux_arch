@@ -25,6 +25,13 @@ class UpdateTodoAction {
   Todo get updatedTodo => update(todo);
 }
 
+class ToggleTodoAction {
+  /// Toggles a todo via [todosReducer]
+  ToggleTodoAction(this.todo);
+
+  final Todo todo;
+}
+
 class SetVisibilityFilter {
   /// Set the current visibility filter via [todosReducer]
   SetVisibilityFilter(this.visibilityFilter);
