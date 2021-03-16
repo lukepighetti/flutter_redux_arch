@@ -6,10 +6,12 @@ import 'package:redux_sandbox/state/reducer.dart';
 import 'package:redux_sandbox/state/selectors.dart';
 
 main() {
+  final now = DateTime(2000);
+
   Store<AppState> createStore() {
     return Store<AppState>(
       todosReducer,
-      initialState: AppState(),
+      initialState: AppState(now: now),
     );
   }
 
@@ -74,7 +76,6 @@ main() {
         'completeTodosSelector, incompleteTodosSelector, scheduledTodosSelector',
         () {
       final store = createStore();
-      final now = DateTime(2000);
 
       store.dispatch(CreateTodoAction(
         Todo(
@@ -88,6 +89,7 @@ main() {
         Todo(
           'Bar',
           completed: false,
+          due: now.subtract(Duration(days: 1)),
         ),
       ));
 
@@ -100,8 +102,24 @@ main() {
       expect(incompleteTodos.first.task, equals('Bar'));
 
       final scheduledTodos = scheduledTodosSelector(store.state);
-      expect(scheduledTodos.length, equals(1));
-      expect(scheduledTodos.first.task, equals('Foo'));
+      expect(scheduledTodos.length, equals(2));
+
+      final upcomingTodos = upcomingTodosSelector(store.state);
+      expect(upcomingTodos.length, equals(1));
+      expect(upcomingTodos.first.task, equals('Foo'));
+
+      final pastTodos = pastTodosSelector(store.state);
+      expect(pastTodos.length, equals(1));
+      expect(pastTodos.first.task, equals('Bar'));
+
+      final completeTodosCount = completeTodosCountSelector(store.state);
+      expect(completeTodosCount, equals(1));
+
+      final incompleteTodosCount = incompleteTodosCountSelector(store.state);
+      expect(incompleteTodosCount, equals(1));
+
+      final totalTodosCount = totalTodosCountSelector(store.state);
+      expect(totalTodosCount, equals(2));
     });
   });
 }

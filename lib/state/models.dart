@@ -8,6 +8,7 @@ abstract class AppState with _$AppState {
   factory AppState({
     @Default([]) List<Todo> todos,
     @Default(VisibilityFilter.showAll) VisibilityFilter visibilityFilter,
+    @required DateTime now,
   }) = _AppState;
 
   factory AppState.fromJson(Map<String, dynamic> json) =>

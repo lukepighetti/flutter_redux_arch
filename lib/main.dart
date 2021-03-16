@@ -7,7 +7,9 @@ import 'state/models.dart';
 void main() {
   final store = Store<AppState>(
     todosReducer,
-    initialState: AppState(),
+    initialState: AppState(
+      now: DateTime.now(),
+    ),
   );
 
   runApp(MyApp());
