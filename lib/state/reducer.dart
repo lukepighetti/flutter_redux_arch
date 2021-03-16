@@ -2,25 +2,35 @@ import 'actions.dart';
 import 'models.dart';
 
 AppState todosReducer(AppState state, dynamic action) {
+  /// Create todo
   if (action is CreateTodoAction) {
     return state.copyWith(
       todos: [...state.todos, action.todo],
     );
-  } else if (action is DeleteTodoAction) {
+  }
+
+  /// Delete todo
+  else if (action is DeleteTodoAction) {
     return state.copyWith(
       todos: [
         for (var todo in state.todos)
           if (todo.task != action.todo.task) todo
       ],
     );
-  } else if (action is UpdateTodoAction) {
+  }
+
+  /// Update todo
+  else if (action is UpdateTodoAction) {
     return state.copyWith(
       todos: [
         for (var todo in state.todos)
           if (todo.task == action.todo.task) action.updatedTodo else todo,
       ],
     );
-  } else if (action is ToggleTodoAction) {
+  }
+
+  /// Toggle todo
+  else if (action is ToggleTodoAction) {
     return state.copyWith(
       todos: [
         for (var todo in state.todos)
@@ -30,7 +40,10 @@ AppState todosReducer(AppState state, dynamic action) {
             todo,
       ],
     );
-  } else if (action is SetVisibilityFilter) {
+  }
+
+  /// Set visibility filter
+  else if (action is SetVisibilityFilter) {
     return state.copyWith(visibilityFilter: action.visibilityFilter);
   } else {
     return state;
