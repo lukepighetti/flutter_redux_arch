@@ -66,7 +66,7 @@ class _TodoScreenState extends State<TodoScreen> {
                           onChanged: (value) {
                             dispatch(UpdateTodoAction(
                               todo,
-                              (e) => e.copyWith(completed: !value),
+                              todo.copyWith(completed: !value),
                             ));
                           },
                         ),

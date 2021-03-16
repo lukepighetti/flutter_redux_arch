@@ -46,7 +46,7 @@ main() {
       /// Update a todo
       store.dispatch(UpdateTodoAction(
         Todo('Build app'),
-        (e) => e.copyWith(task: 'Test app'),
+        Todo('Test app'),
       ));
 
       expect(store.state.todos, isNotEmpty);

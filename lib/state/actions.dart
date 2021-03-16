@@ -1,40 +1,59 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 import 'models.dart';
 
-class CreateTodoAction {
-  /// Creates a todo via [todosReducer]
-  CreateTodoAction(this.todo);
+part 'actions.freezed.dart';
+part 'actions.g.dart';
 
-  final Todo todo;
+@freezed
+abstract class CreateTodoAction with _$CreateTodoAction {
+  /// Creates a todo via [todosReducer]
+  factory CreateTodoAction(
+    Todo todo,
+  ) = _CreateTodoAction;
+
+  factory CreateTodoAction.fromJson(Map<String, dynamic> json) =>
+      _$CreateTodoActionFromJson(json);
 }
 
-class DeleteTodoAction {
+@freezed
+abstract class DeleteTodoAction with _$DeleteTodoAction {
   /// Deletes a todo via [todosReducer]
-  DeleteTodoAction(this.todo);
+  factory DeleteTodoAction(
+    Todo todo,
+  ) = _DeleteTodoAction;
 
-  final Todo todo;
+  factory DeleteTodoAction.fromJson(Map<String, dynamic> json) =>
+      _$DeleteTodoActionFromJson(json);
 }
 
 class UpdateTodoAction {
   /// Updates a todo via [todosReducer]
-  UpdateTodoAction(this.todo, this.update);
+  UpdateTodoAction(this.todo, this.updatedTodo);
 
   final Todo todo;
 
-  final Todo Function(Todo) update;
-
-  Todo get updatedTodo => update(todo);
+  final Todo updatedTodo;
 }
 
-class ToggleTodoAction {
-  /// Toggles a todo via [todosReducer]
-  ToggleTodoAction(this.todo);
+@freezed
+abstract class ToggleTodoAction with _$ToggleTodoAction {
+  /// Deletes a todo via [todosReducer]
+  factory ToggleTodoAction(
+    Todo todo,
+  ) = _ToggleTodoAction;
 
-  final Todo todo;
+  factory ToggleTodoAction.fromJson(Map<String, dynamic> json) =>
+      _$ToggleTodoActionFromJson(json);
 }
 
-class SetVisibilityFilter {
+@freezed
+abstract class SetVisibilityFilter with _$SetVisibilityFilter {
   /// Set the current visibility filter via [todosReducer]
-  SetVisibilityFilter(this.visibilityFilter);
+  factory SetVisibilityFilter(
+    final VisibilityFilter visibilityFilter,
+  ) = _SetVisibilityFilter;
 
-  final VisibilityFilter visibilityFilter;
+  factory SetVisibilityFilter.fromJson(Map<String, dynamic> json) =>
+      _$SetVisibilityFilterFromJson(json);
 }
