@@ -19,6 +19,7 @@ abstract class Todo with _$Todo {
   factory Todo(
     String task, {
     @Default(false) bool completed,
+    DateTime due,
   }) = _Todo;
 
   factory Todo.fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);

@@ -3,6 +3,7 @@ import 'package:redux/redux.dart';
 import 'package:redux_sandbox/state/actions.dart';
 import 'package:redux_sandbox/state/models.dart';
 import 'package:redux_sandbox/state/reducer.dart';
+import 'package:redux_sandbox/state/selectors.dart';
 
 main() {
   Store<AppState> createStore() {
@@ -67,6 +68,40 @@ main() {
 
       expect(
           store.state.visibilityFilter, equals(VisibilityFilter.showComplete));
+    });
+
+    test(
+        'completeTodosSelector, incompleteTodosSelector, scheduledTodosSelector',
+        () {
+      final store = createStore();
+      final now = DateTime(2000);
+
+      store.dispatch(CreateTodoAction(
+        Todo(
+          'Foo',
+          completed: true,
+          due: now.add(Duration(days: 1)),
+        ),
+      ));
+
+      store.dispatch(CreateTodoAction(
+        Todo(
+          'Bar',
+          completed: false,
+        ),
+      ));
+
+      final completeTodos = completeTodosSelector(store.state);
+      expect(completeTodos.length, equals(1));
+      expect(completeTodos.first.task, equals('Foo'));
+
+      final incompleteTodos = incompleteTodosSelector(store.state);
+      expect(incompleteTodos.length, equals(1));
+      expect(incompleteTodos.first.task, equals('Bar'));
+
+      final scheduledTodos = scheduledTodosSelector(store.state);
+      expect(scheduledTodos.length, equals(1));
+      expect(scheduledTodos.first.task, equals('Foo'));
     });
   });
 }
