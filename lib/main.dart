@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_dev_tools/redux_dev_tools.dart';
+import 'package:redux_logging/redux_logging.dart';
 import 'package:redux_persist/redux_persist.dart';
 import 'package:redux_remote_devtools/redux_remote_devtools.dart';
 import 'package:redux_sandbox/screens/todo_screen.dart';
@@ -38,6 +39,7 @@ void main() async {
     middleware: [
       remoteDevTools,
       persistor.createMiddleware(),
+      LoggingMiddleware.printer(),
     ],
   );
 
