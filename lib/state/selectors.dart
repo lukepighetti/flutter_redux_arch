@@ -46,3 +46,13 @@ AppSelector<int> createIterableLengthSelector<T>(
 
 /// A selector typedef for this particular app. Acts on [AppState]
 typedef AppSelector<R1> = R1 Function(AppState);
+
+extension AppStateSelectors on AppState {
+  /// Simple selectors can be replaced with extension methods. Does this
+  /// replace `reselect` all together?
+  Iterable<Todo> get pastTodos => todos.where((e) => e.due.isBefore(now));
+
+  /// If you need the performance of memoized selectors, you can
+  /// abstract away these selectors with extension methods.
+  Iterable<Todo> get pastTodosMemoized => pastTodosSelector(this);
+}
