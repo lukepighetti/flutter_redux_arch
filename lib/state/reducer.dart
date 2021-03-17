@@ -2,8 +2,13 @@ import 'actions.dart';
 import 'models.dart';
 
 AppState todosReducer(AppState state, dynamic action) {
+  /// Hydrate the store
+  if (action is HydrateStore) {
+    return action.persistedState;
+  }
+
   /// Create todo
-  if (action is CreateTodoAction) {
+  else if (action is CreateTodoAction) {
     return state.copyWith(
       todos: [...state.todos, action.todo],
     );

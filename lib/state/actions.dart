@@ -6,6 +6,17 @@ part 'actions.freezed.dart';
 part 'actions.g.dart';
 
 @freezed
+abstract class HydrateStore with _$HydrateStore {
+  /// Hydrates the Redux store with persisted AppState
+  factory HydrateStore(
+    AppState persistedState,
+  ) = _HydrateStore;
+
+  factory HydrateStore.fromJson(Map<String, dynamic> json) =>
+      _$HydrateStoreFromJson(json);
+}
+
+@freezed
 abstract class CreateTodoAction with _$CreateTodoAction {
   /// Creates a todo via [todosReducer]
   factory CreateTodoAction(
@@ -27,13 +38,16 @@ abstract class DeleteTodoAction with _$DeleteTodoAction {
       _$DeleteTodoActionFromJson(json);
 }
 
-class UpdateTodoAction {
-  /// Updates a todo via [todosReducer]
-  UpdateTodoAction(this.todo, this.updatedTodo);
+@freezed
+abstract class UpdateTodoAction with _$UpdateTodoAction {
+  /// Deletes a todo via [todosReducer]
+  factory UpdateTodoAction(
+    Todo todo,
+    Todo updatedTodo,
+  ) = _UpdateTodoAction;
 
-  final Todo todo;
-
-  final Todo updatedTodo;
+  factory UpdateTodoAction.fromJson(Map<String, dynamic> json) =>
+      _$UpdateTodoActionFromJson(json);
 }
 
 @freezed
