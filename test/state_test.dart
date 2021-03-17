@@ -23,6 +23,38 @@ main() {
       expect(store.state.visibilityFilter, equals(VisibilityFilter.showAll));
     });
 
+    test('FetchingTodosAction', () {
+      final store = createStore();
+
+      /// Initial state
+      expect(store.state.fetchingTodos, isFalse);
+
+      /// Is fetching
+      store.dispatch(SetFetchingTodosAction(true));
+      expect(store.state.fetchingTodos, isTrue);
+
+      /// Done fetching
+      store.dispatch(SetFetchingTodosAction(false));
+      expect(store.state.fetchingTodos, isFalse);
+    });
+
+    test('AddTodosAction', () {
+      final store = createStore();
+
+      /// Add multiple todos
+      store.dispatch(AddTodosAction([
+        Todo('Build app'),
+        Todo('Market app'),
+        Todo('Sell app'),
+        Todo('Retire downeast'),
+      ]));
+
+      expect(store.state.todos, isNotEmpty);
+      expect(store.state.todos.first.task, equals('Build app'));
+      expect(store.state.todos.last.task, equals('Retire downeast'));
+      expect(store.state.todos.length, equals(4));
+    });
+
     test('Create/Update/Delete/Toggle TodoAction', () {
       final store = createStore();
 

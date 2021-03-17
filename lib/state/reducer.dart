@@ -1,3 +1,5 @@
+import 'package:redux_dev_tools/redux_dev_tools.dart';
+
 import 'actions.dart';
 import 'models.dart';
 
@@ -5,6 +7,20 @@ AppState todosReducer(AppState state, dynamic action) {
   /// Hydrate the store
   if (action is HydrateStore) {
     return action.persistedState;
+  }
+
+  /// Fetching todos is in progress
+  else if (action is SetFetchingTodosAction) {
+    return state.copyWith(
+      fetchingTodos: action.fetching,
+    );
+  }
+
+  /// Add multiple todos
+  else if (action is AddTodosAction) {
+    return state.copyWith(
+      todos: [...state.todos, ...action.todos],
+    );
   }
 
   /// Create todo
@@ -50,7 +66,16 @@ AppState todosReducer(AppState state, dynamic action) {
   /// Set visibility filter
   else if (action is SetVisibilityFilter) {
     return state.copyWith(visibilityFilter: action.visibilityFilter);
-  } else {
+  }
+
+  /// Gracefully ignore dev tools actions
+  else if (action is DevToolsAction) {
+    return state;
+  }
+
+  /// Unsupported action
+  else {
+    print("Warning: reducer doesn't support $action");
     return state;
   }
 }

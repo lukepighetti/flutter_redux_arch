@@ -39,7 +39,7 @@ class _AddTodoDialogState extends State<AddTodoDialog> {
   @override
   Widget build(BuildContext context) {
     return AppStateConnector(
-      builder: (context, state, dispatch) {
+      builder: (context, store, state, dispatch) {
         /// Dispatch [CreateTodoAction], clear the controller, optionally
         /// pop the dialog
         void _handleAddTodo(String value) {

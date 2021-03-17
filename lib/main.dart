@@ -9,6 +9,7 @@ import 'package:redux_sandbox/screens/todo_screen.dart';
 import 'package:redux_sandbox/state/actions.dart';
 import 'package:redux_sandbox/state/reducer.dart';
 import 'package:redux_sandbox/state/shared_preferences_storage.dart';
+import 'package:redux_thunk/redux_thunk.dart';
 
 import 'extensions.dart';
 import 'state/models.dart';
@@ -40,6 +41,7 @@ void main() async {
       remoteDevTools,
       persistor.createMiddleware(),
       LoggingMiddleware.printer(),
+      thunkMiddleware,
     ],
   );
 
@@ -47,14 +49,9 @@ void main() async {
   remoteDevTools.store = store;
 
   /// Hydrate the store
-  if (persistedState != null)
-    store.dispatch(HydrateStore(
-      persistedState,
-    ));
-  else
-    store.dispatch(HydrateStore(
-      initialState,
-    ));
+  store.dispatch(HydrateStore(
+    persistedState ?? initialState,
+  ));
 
   /// Run the app
   runApp(MyApp(
@@ -76,6 +73,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
+        debugShowCheckedModeBanner: false,
         home: TodoScreen(),
       ),
     );

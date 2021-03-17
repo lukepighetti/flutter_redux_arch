@@ -3,6 +3,7 @@ import 'package:redux_sandbox/screens/add_todo_dialog.dart';
 import 'package:redux_sandbox/state/actions.dart';
 import 'package:redux_sandbox/state/app_state_connector.dart';
 import 'package:redux_sandbox/state/selectors.dart';
+import 'package:redux_sandbox/state/thunks.dart';
 
 class TodoScreen extends StatefulWidget {
   @override
@@ -15,7 +16,7 @@ class _TodoScreenState extends State<TodoScreen> {
     final theme = Theme.of(context);
 
     return AppStateConnector(
-      builder: (context, state, dispatch) {
+      builder: (context, store, state, dispatch) {
         return Scaffold(
           appBar: AppBar(
             title: Column(
@@ -34,6 +35,24 @@ class _TodoScreenState extends State<TodoScreen> {
                 )
               ],
             ),
+            actions: [
+              PopupMenuButton<VoidCallback>(
+                icon: Icon(Icons.add),
+                onSelected: (callback) => callback(),
+                itemBuilder: (context) {
+                  return [
+                    PopupMenuItem(
+                      value: () => fetchAdventurousTodos(store),
+                      child: Text('Fetch adventurous todos'),
+                    ),
+                    PopupMenuItem(
+                      value: () => fetchRiskyTodos(store),
+                      child: Text('Fetch risky todos'),
+                    ),
+                  ];
+                },
+              )
+            ],
           ),
           floatingActionButton: FloatingActionButton(
             child: Icon(Icons.add),
@@ -51,7 +70,7 @@ class _TodoScreenState extends State<TodoScreen> {
               if (state.todos.isEmpty)
                 return Center(
                   child: Text(
-                    'Nothing left to do',
+                    'Nothing to do',
                     style: theme.textTheme.headline5,
                   ),
                 );
@@ -77,6 +96,8 @@ class _TodoScreenState extends State<TodoScreen> {
                           dispatch(ToggleTodoAction(todo));
                         },
                       ),
+                    if (state.fetchingTodos == true)
+                      Center(child: CircularProgressIndicator())
                   ],
                 );
             },

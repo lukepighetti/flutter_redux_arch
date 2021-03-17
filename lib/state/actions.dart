@@ -28,6 +28,28 @@ abstract class CreateTodoAction with _$CreateTodoAction {
 }
 
 @freezed
+abstract class AddTodosAction with _$AddTodosAction {
+  /// Add multiple todos via [todosReducer]
+  factory AddTodosAction(
+    List<Todo> todos,
+  ) = _AddTodosAction;
+
+  factory AddTodosAction.fromJson(Map<String, dynamic> json) =>
+      _$AddTodosActionFromJson(json);
+}
+
+@freezed
+abstract class SetFetchingTodosAction with _$SetFetchingTodosAction {
+  /// Add multiple todos via [todosReducer]
+  factory SetFetchingTodosAction(
+    bool fetching,
+  ) = _SetFetchingTodosAction;
+
+  factory SetFetchingTodosAction.fromJson(Map<String, dynamic> json) =>
+      _$SetFetchingTodosActionFromJson(json);
+}
+
+@freezed
 abstract class DeleteTodoAction with _$DeleteTodoAction {
   /// Deletes a todo via [todosReducer]
   factory DeleteTodoAction(

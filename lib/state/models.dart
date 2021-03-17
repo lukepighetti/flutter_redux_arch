@@ -7,6 +7,7 @@ part 'models.g.dart';
 abstract class AppState with _$AppState {
   factory AppState({
     @Default([]) List<Todo> todos,
+    @Default(false) bool fetchingTodos,
     @Default(VisibilityFilter.showAll) VisibilityFilter visibilityFilter,
     @required DateTime now,
   }) = _AppState;

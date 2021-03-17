@@ -8,15 +8,15 @@ class AppStateConnector extends StatelessWidget {
   /// A naiive redux store connector specifically made for this app
   const AppStateConnector({Key key, this.builder}) : super(key: key);
 
-  final Widget Function(BuildContext, AppState state, NextDispatcher dispatch)
-      builder;
+  final Widget Function(BuildContext, Store<AppState> store, AppState state,
+      NextDispatcher dispatch) builder;
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, Store<AppState>>(
       converter: (e) => e,
       builder: (context, store) {
-        return builder(context, store.state, store.dispatch);
+        return builder(context, store, store.state, store.dispatch);
       },
     );
   }
