@@ -1,9 +1,12 @@
 import 'package:redux/redux.dart';
 import 'package:redux_sandbox/state/actions.dart';
 import 'package:redux_sandbox/state/models.dart';
+import 'package:redux_thunk/redux_thunk.dart';
 
 /// Fetch some adventurous todos
-void fetchAdventurousTodos(Store<AppState> store) async {
+///
+/// Logs as `Closure: (Store<AppState>) => void from Function 'fetchAdventurousTodos': static`
+ThunkAction<AppState> fetchAdventurousTodos = (Store<AppState> store) async {
   store.dispatch(SetFetchingTodosAction(true));
 
   await Future.delayed(Duration(seconds: 1));
@@ -16,10 +19,12 @@ void fetchAdventurousTodos(Store<AppState> store) async {
 
   store.dispatch(AddTodosAction(todos));
   store.dispatch(SetFetchingTodosAction(false));
-}
+};
 
 /// Fetch some risky todos
-void fetchRiskyTodos(Store<AppState> store) async {
+///
+/// Logs as `Closure: (Store<AppState>) => void from Function 'fetchRiskyTodos': static`
+ThunkAction<AppState> fetchRiskyTodos = (Store<AppState> store) async {
   store.dispatch(SetFetchingTodosAction(true));
 
   await Future.delayed(Duration(seconds: 1));
@@ -31,4 +36,4 @@ void fetchRiskyTodos(Store<AppState> store) async {
 
   store.dispatch(AddTodosAction(todos));
   store.dispatch(SetFetchingTodosAction(false));
-}
+};

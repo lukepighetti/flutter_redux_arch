@@ -42,11 +42,11 @@ class _TodoScreenState extends State<TodoScreen> {
                 itemBuilder: (context) {
                   return [
                     PopupMenuItem(
-                      value: () => fetchAdventurousTodos(store),
+                      value: () => dispatch(fetchAdventurousTodos),
                       child: Text('Fetch adventurous todos'),
                     ),
                     PopupMenuItem(
-                      value: () => fetchRiskyTodos(store),
+                      value: () => dispatch(fetchRiskyTodos),
                       child: Text('Fetch risky todos'),
                     ),
                   ];

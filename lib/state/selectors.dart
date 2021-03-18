@@ -24,7 +24,7 @@ final upcomingTodosSelector =
 final pastTodosSelector =
     (AppState state) => state.todos.where((e) => e.due.isBefore(state.now));
 
-/// Select number of past todos
+/// Select number of complete todos
 final completeTodosCountSelector =
     createIterableLengthSelector<Todo>(completeTodosSelector);
 
