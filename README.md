@@ -2,6 +2,11 @@
 
 A fresh look at Redux with Flutter in 2021.
 
+## QCFlutter Talk
+
+- Intro: https://www.youtube.com/watch?v=kAWqZNvLrGg&t=12m15s
+- Walkthrough: https://www.youtube.com/watch?v=kAWqZNvLrGg&t=19m58s
+
 ### Remote Dev Tools
 
 ```
