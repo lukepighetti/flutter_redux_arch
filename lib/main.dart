@@ -5,6 +5,7 @@ import 'package:redux_dev_tools/redux_dev_tools.dart';
 import 'package:redux_logging/redux_logging.dart';
 import 'package:redux_persist/redux_persist.dart';
 import 'package:redux_remote_devtools/redux_remote_devtools.dart';
+import 'package:redux_sandbox/remote_dev_tools.dart';
 import 'package:redux_sandbox/screens/todo_screen.dart';
 import 'package:redux_sandbox/service/toast_service.dart';
 import 'package:redux_sandbox/state/actions.dart';
@@ -19,7 +20,12 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   /// Create remote dev tools client
-  final remoteDevTools = RemoteDevToolsMiddleware('192.168.1.121:8000');
+  final remoteDevTools = RemoteDevToolsMiddleware(
+    '192.168.1.121:8000',
+    actionEncoder: actionEncoder,
+    actionDecoder: actionDecoder,
+  );
+
   await remoteDevTools.connect().ignoreErrors();
 
   /// Create persistance service

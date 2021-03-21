@@ -32,8 +32,8 @@ AppState todosReducer(AppState state, dynamic action) {
       delete: (Todo todo) {
         return state.copyWith(
           todos: [
-            for (var todo in state.todos)
-              if (todo.task != todo.task) todo
+            for (var e in state.todos)
+              if (e.task != todo.task) e
           ],
         );
       },
