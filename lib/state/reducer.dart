@@ -54,9 +54,9 @@ AppState todosReducer(AppState state, dynamic action) {
       toggle: (Todo todo) {
         return state.copyWith(
           todos: [
-            for (var todo in state.todos)
-              if (todo.task == todo.task)
-                todo.copyWith(completed: !todo.completed)
+            for (var e in state.todos)
+              if (e.task == todo.task)
+                e.copyWith(completed: !e.completed)
               else
                 todo,
           ],
@@ -67,8 +67,8 @@ AppState todosReducer(AppState state, dynamic action) {
       update: (Todo todo, Todo updatedTodo) {
         return state.copyWith(
           todos: [
-            for (var todo in state.todos)
-              if (todo.task == todo.task) updatedTodo else todo,
+            for (var e in state.todos)
+              if (e.task == todo.task) updatedTodo else todo,
           ],
         );
       },
