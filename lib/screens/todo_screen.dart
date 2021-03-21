@@ -90,17 +90,17 @@ class _TodoScreenState extends State<TodoScreen> {
                         trailing: Checkbox(
                           value: !todo.completed,
                           onChanged: (value) {
-                            dispatch(UpdateTodoAction(
+                            dispatch(TodoAction.update(
                               todo,
                               todo.copyWith(completed: !value),
                             ));
                           },
                         ),
                         onLongPress: () {
-                          dispatch(DeleteTodoAction(todo));
+                          dispatch(TodoAction.delete(todo));
                         },
                         onTap: () {
-                          dispatch(ToggleTodoAction(todo));
+                          dispatch(TodoAction.toggle(todo));
                         },
                       ),
                     if (state.fetchingTodos == true)

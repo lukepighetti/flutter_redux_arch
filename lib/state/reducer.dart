@@ -1,79 +1,81 @@
-import 'package:redux_dev_tools/redux_dev_tools.dart';
-
 import 'actions.dart';
 import 'models.dart';
 
 AppState todosReducer(AppState state, dynamic action) {
-  /// Hydrate the store
-  if (action is HydrateStore) {
-    return action.persistedState;
-  }
-
-  /// Fetching todos is in progress
-  else if (action is SetFetchingTodosAction) {
-    return state.copyWith(
-      fetchingTodos: action.fetching,
+  /// Store actions
+  if (action is StoreAction) {
+    return action.when(
+      hydrate: (newState) {
+        return newState;
+      },
     );
   }
 
-  /// Add multiple todos
-  else if (action is AddTodosAction) {
-    return state.copyWith(
-      todos: [...state.todos, ...action.todos],
+  /// Todo actions
+  else if (action is TodoAction) {
+    return action.when(
+      /// Add multiple todos
+      add: (List<Todo> todos) {
+        return state.copyWith(
+          todos: [...state.todos, ...todos],
+        );
+      },
+
+      /// Create todo
+      create: (Todo todo) {
+        return state.copyWith(
+          todos: [...state.todos, todo],
+        );
+      },
+
+      /// Delete todo
+      delete: (Todo todo) {
+        return state.copyWith(
+          todos: [
+            for (var todo in state.todos)
+              if (todo.task != todo.task) todo
+          ],
+        );
+      },
+
+      /// Fetching todos is in progress
+      fetching: (bool fetching) {
+        return state.copyWith(
+          fetchingTodos: fetching,
+        );
+      },
+
+      /// Set visibility filter
+      filter: (VisibilityFilter filter) {
+        return state.copyWith(visibilityFilter: filter);
+      },
+
+      /// Toggle todo
+      toggle: (Todo todo) {
+        return state.copyWith(
+          todos: [
+            for (var todo in state.todos)
+              if (todo.task == todo.task)
+                todo.copyWith(completed: !todo.completed)
+              else
+                todo,
+          ],
+        );
+      },
+
+      /// Update todo
+      update: (Todo todo, Todo updatedTodo) {
+        return state.copyWith(
+          todos: [
+            for (var todo in state.todos)
+              if (todo.task == todo.task) updatedTodo else todo,
+          ],
+        );
+      },
     );
   }
 
-  /// Create todo
-  else if (action is CreateTodoAction) {
-    return state.copyWith(
-      todos: [...state.todos, action.todo],
-    );
-  }
-
-  /// Delete todo
-  else if (action is DeleteTodoAction) {
-    return state.copyWith(
-      todos: [
-        for (var todo in state.todos)
-          if (todo.task != action.todo.task) todo
-      ],
-    );
-  }
-
-  /// Update todo
-  else if (action is UpdateTodoAction) {
-    return state.copyWith(
-      todos: [
-        for (var todo in state.todos)
-          if (todo.task == action.todo.task) action.updatedTodo else todo,
-      ],
-    );
-  }
-
-  /// Toggle todo
-  else if (action is ToggleTodoAction) {
-    return state.copyWith(
-      todos: [
-        for (var todo in state.todos)
-          if (todo.task == action.todo.task)
-            todo.copyWith(completed: !todo.completed)
-          else
-            todo,
-      ],
-    );
-  }
-
-  /// Set visibility filter
-  else if (action is SetVisibilityFilter) {
-    return state.copyWith(visibilityFilter: action.visibilityFilter);
-  }
-
-  /// Gracefully ignore dev tools actions
-  else if (action is DevToolsAction) {
-    return state;
-  }
-
-  /// Unsupported action or middleware action
+  /// Unrecognized action
   else {
     return state;
   }

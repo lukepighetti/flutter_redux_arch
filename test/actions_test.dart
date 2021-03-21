@@ -6,26 +6,26 @@ import 'utils.dart';
 
 main() {
   group('Actions', () {
-    test('FetchingTodosAction', () {
+    test('TodoAction.fetching', () {
       final store = TestUtils.createStore();
 
       /// Initial state
       expect(store.state.fetchingTodos, isFalse);
 
       /// Is fetching
-      store.dispatch(SetFetchingTodosAction(true));
+      store.dispatch(TodoAction.fetching(true));
       expect(store.state.fetchingTodos, isTrue);
 
       /// Done fetching
-      store.dispatch(SetFetchingTodosAction(false));
+      store.dispatch(TodoAction.fetching(false));
       expect(store.state.fetchingTodos, isFalse);
     });
 
-    test('AddTodosAction', () {
+    test('TodoAction.add', () {
       final store = TestUtils.createStore();
 
       /// Add multiple todos
-      store.dispatch(AddTodosAction([
+      store.dispatch(TodoAction.add([
         Todo('Build app'),
         Todo('Market app'),
         Todo('Sell app'),
@@ -38,11 +38,11 @@ main() {
       expect(store.state.todos.length, equals(4));
     });
 
-    test('Create/Update/Delete/Toggle TodoAction', () {
+    test('TodoAction.create, update, delete, toggle', () {
       final store = TestUtils.createStore();
 
       /// Add a todo
-      store.dispatch(CreateTodoAction(
+      store.dispatch(TodoAction.create(
         Todo('Build app'),
       ));
 
@@ -51,7 +51,7 @@ main() {
       expect(store.state.todos.first.completed, isFalse);
 
       /// Toggle a todo
-      store.dispatch(ToggleTodoAction(
+      store.dispatch(TodoAction.toggle(
         Todo('Build app'),
       ));
 
@@ -59,7 +59,7 @@ main() {
       expect(store.state.todos.first.completed, isTrue);
 
       /// Update a todo
-      store.dispatch(UpdateTodoAction(
+      store.dispatch(TodoAction.update(
         Todo('Build app'),
         Todo('Test app'),
       ));
@@ -68,18 +68,18 @@ main() {
       expect(store.state.todos.first.task, equals('Test app'));
 
       /// Delete a todo
-      store.dispatch(DeleteTodoAction(
+      store.dispatch(TodoAction.delete(
         Todo('Test app'),
       ));
 
       expect(store.state.todos, isEmpty);
     });
 
-    test('SetVisibilityFilter', () {
+    test('TodoAction.filter', () {
       final store = TestUtils.createStore();
 
       /// Change visibility filter
-      store.dispatch(SetVisibilityFilter(
+      store.dispatch(TodoAction.filter(
         VisibilityFilter.showComplete,
       ));
 

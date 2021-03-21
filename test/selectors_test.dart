@@ -13,7 +13,7 @@ main() {
       final store = TestUtils.createStore();
       final now = store.state.now;
 
-      store.dispatch(CreateTodoAction(
+      store.dispatch(TodoAction.create(
         Todo(
           'Foo',
           completed: true,
@@ -21,7 +21,7 @@ main() {
         ),
       ));
 
-      store.dispatch(CreateTodoAction(
+      store.dispatch(TodoAction.create(
         Todo(
           'Bar',
           completed: false,

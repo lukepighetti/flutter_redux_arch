@@ -35,18 +35,18 @@ ThunkAction<AppState> fetchRiskyTodos(TodoThunkServices services) {
 /// The base action for fetching todos, handling errors, and allowing a retry
 ThunkAction<AppState> _fetchTodos(TodoThunkServices services, TodoType type) {
   return (Store<AppState> store) async {
-    store.dispatch(SetFetchingTodosAction(true));
+    store.dispatch(TodoAction.fetching(true));
 
     try {
       final todos = await services.todoApi.getTodos(type);
-      store.dispatch(AddTodosAction(todos));
+      store.dispatch(TodoAction.add(todos));
     } on TodoApiError catch (e) {
       services.toastService.showErrorToast(
         '${e.message}',
         onPressRetry: () => store.dispatch(_fetchTodos(services, type)),
       );
     } finally {
-      store.dispatch(SetFetchingTodosAction(false));
+      store.dispatch(TodoAction.fetching(false));
     }
   };
 }
