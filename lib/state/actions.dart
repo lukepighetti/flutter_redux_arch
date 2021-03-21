@@ -6,90 +6,37 @@ part 'actions.freezed.dart';
 part 'actions.g.dart';
 
 @freezed
-abstract class HydrateStore with _$HydrateStore {
+abstract class StoreAction with _$StoreAction {
   /// Hydrates the Redux store with persisted AppState
-  factory HydrateStore(
-    AppState persistedState,
-  ) = _HydrateStore;
+  factory StoreAction.hydrate(AppState newState) = _StoreActionHydrate;
 
-  factory HydrateStore.fromJson(Map<String, dynamic> json) =>
-      _$HydrateStoreFromJson(json);
+  factory StoreAction.fromJson(Map<String, dynamic> json) =>
+      _$StoreActionFromJson(json);
 }
 
 @freezed
-abstract class CreateTodoAction with _$CreateTodoAction {
-  /// Creates a todo via [todosReducer]
-  factory CreateTodoAction(
-    Todo todo,
-  ) = _CreateTodoAction;
+abstract class TodoAction with _$TodoAction {
+  /// Creates a todo
+  factory TodoAction.create(Todo todo) = _TodoActionCreate;
 
-  factory CreateTodoAction.fromJson(Map<String, dynamic> json) =>
-      _$CreateTodoActionFromJson(json);
-}
+  /// Add multiple todos
+  factory TodoAction.add(List<Todo> todos) = _TodoActionAdd;
 
-@freezed
-abstract class AddTodosAction with _$AddTodosAction {
-  /// Add multiple todos via [todosReducer]
-  factory AddTodosAction(
-    List<Todo> todos,
-  ) = _AddTodosAction;
+  /// Delete a todo
+  factory TodoAction.delete(Todo todo) = _TodoActionDelete;
 
-  factory AddTodosAction.fromJson(Map<String, dynamic> json) =>
-      _$AddTodosActionFromJson(json);
-}
+  /// Update a todo
+  factory TodoAction.update(Todo todo, Todo updatedTodo) = _TodoActionUpdate;
 
-@freezed
-abstract class SetFetchingTodosAction with _$SetFetchingTodosAction {
-  /// Add multiple todos via [todosReducer]
-  factory SetFetchingTodosAction(
-    bool fetching,
-  ) = _SetFetchingTodosAction;
+  /// Toggle a todo
+  factory TodoAction.toggle(Todo todo) = _TodoActionToggle;
 
-  factory SetFetchingTodosAction.fromJson(Map<String, dynamic> json) =>
-      _$SetFetchingTodosActionFromJson(json);
-}
+  /// Filter a todo
+  factory TodoAction.filter(VisibilityFilter filter) = _TodoActionFilter;
 
-@freezed
-abstract class DeleteTodoAction with _$DeleteTodoAction {
-  /// Deletes a todo via [todosReducer]
-  factory DeleteTodoAction(
-    Todo todo,
-  ) = _DeleteTodoAction;
+  /// Todos are fetching
+  factory TodoAction.fetching(bool fetching) = _TodoActionFetching;
 
-  factory DeleteTodoAction.fromJson(Map<String, dynamic> json) =>
-      _$DeleteTodoActionFromJson(json);
-}
-
-@freezed
-abstract class UpdateTodoAction with _$UpdateTodoAction {
-  /// Deletes a todo via [todosReducer]
-  factory UpdateTodoAction(
-    Todo todo,
-    Todo updatedTodo,
-  ) = _UpdateTodoAction;
-
-  factory UpdateTodoAction.fromJson(Map<String, dynamic> json) =>
-      _$UpdateTodoActionFromJson(json);
-}
-
-@freezed
-abstract class ToggleTodoAction with _$ToggleTodoAction {
-  /// Deletes a todo via [todosReducer]
-  factory ToggleTodoAction(
-    Todo todo,
-  ) = _ToggleTodoAction;
-
-  factory ToggleTodoAction.fromJson(Map<String, dynamic> json) =>
-      _$ToggleTodoActionFromJson(json);
-}
-
-@freezed
-abstract class SetVisibilityFilter with _$SetVisibilityFilter {
-  /// Set the current visibility filter via [todosReducer]
-  factory SetVisibilityFilter(
-    final VisibilityFilter visibilityFilter,
-  ) = _SetVisibilityFilter;
-
-  factory SetVisibilityFilter.fromJson(Map<String, dynamic> json) =>
-      _$SetVisibilityFilterFromJson(json);
+  factory TodoAction.fromJson(Map<String, dynamic> json) =>
+      _$TodoActionFromJson(json);
 }

@@ -43,7 +43,7 @@ class _AddTodoDialogState extends State<AddTodoDialog> {
         /// Dispatch [CreateTodoAction], clear the controller, optionally
         /// pop the dialog
         void _handleAddTodo(String value) {
-          dispatch(CreateTodoAction(
+          dispatch(TodoAction.create(
             Todo(value, completed: false),
           ));
 

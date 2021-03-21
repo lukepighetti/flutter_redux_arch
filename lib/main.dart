@@ -50,7 +50,7 @@ void main() async {
   remoteDevTools.store = store;
 
   /// Hydrate the store
-  store.dispatch(HydrateStore(
+  store.dispatch(StoreAction.hydrate(
     persistedState ?? initialState,
   ));
 
