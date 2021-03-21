@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:redux_sandbox/screens/add_todo_dialog.dart';
+import 'package:redux_sandbox/service/toast_service.dart';
+import 'package:redux_sandbox/service/todo_api.dart';
 import 'package:redux_sandbox/state/actions.dart';
 import 'package:redux_sandbox/state/app_state_connector.dart';
 import 'package:redux_sandbox/state/selectors.dart';
@@ -11,6 +13,11 @@ class TodoScreen extends StatefulWidget {
 }
 
 class _TodoScreenState extends State<TodoScreen> {
+  final services = TodoThunkServices(
+    toastService: ToastService(),
+    todoApi: TodoApi(),
+  );
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -42,11 +49,11 @@ class _TodoScreenState extends State<TodoScreen> {
                 itemBuilder: (context) {
                   return [
                     PopupMenuItem(
-                      value: () => dispatch(fetchAdventurousTodos),
+                      value: () => dispatch(fetchAdventurousTodos(services)),
                       child: Text('Fetch adventurous todos'),
                     ),
                     PopupMenuItem(
-                      value: () => dispatch(fetchRiskyTodos),
+                      value: () => dispatch(fetchRiskyTodos(services)),
                       child: Text('Fetch risky todos'),
                     ),
                   ];

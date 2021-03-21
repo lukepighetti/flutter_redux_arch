@@ -6,6 +6,7 @@ import 'package:redux_logging/redux_logging.dart';
 import 'package:redux_persist/redux_persist.dart';
 import 'package:redux_remote_devtools/redux_remote_devtools.dart';
 import 'package:redux_sandbox/screens/todo_screen.dart';
+import 'package:redux_sandbox/service/toast_service.dart';
 import 'package:redux_sandbox/state/actions.dart';
 import 'package:redux_sandbox/state/reducer.dart';
 import 'package:redux_sandbox/state/shared_preferences_storage.dart';
@@ -53,6 +54,9 @@ void main() async {
     persistedState ?? initialState,
   ));
 
+  /// Setup [ToastService] messenger key
+  ToastService.messenger = GlobalKey<ScaffoldMessengerState>();
+
   /// Run the app
   runApp(MyApp(
     store: store,
@@ -74,6 +78,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         debugShowCheckedModeBanner: false,
+        scaffoldMessengerKey: ToastService.messenger,
         home: TodoScreen(),
       ),
     );

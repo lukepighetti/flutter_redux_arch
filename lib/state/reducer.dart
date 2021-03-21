@@ -73,9 +73,8 @@ AppState todosReducer(AppState state, dynamic action) {
     return state;
   }
 
-  /// Unsupported action
+  /// Unsupported action or middleware action
   else {
-    print("Warning: reducer doesn't support $action");
     return state;
   }
 }
