@@ -28,8 +28,16 @@ String actionEncoder(dynamic action) {
 /// A custom action decoder that handles our actions
 ActionDecoder actionDecoder = (dynamic payload) {
   final map = payload as Map<String, dynamic>;
-  final actionGroup = map['type'].split('.').first;
-  final actionPayload = map['payload'];
+  final action = (map['type'] as String).split('.');
+  final actionGroup = action.first;
+  final actionType = action.length == 2 ? action.last : '';
+
+  final actionPayload = map['payload'] as Map;
+
+  /// If the payload is missing the action type and we have it, add it to the payload
+  if (!actionPayload.containsKey('runtimeType') && actionType.isNotEmpty) {
+    actionPayload['runtimeType'] = actionType;
+  }
 
   return decoder(actionGroup, actionPayload);
 };
