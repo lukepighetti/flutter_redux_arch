@@ -1,11 +1,10 @@
-# redux_sandbox
+# flutter_redux_arch
 
 A fresh look at Redux with Flutter in 2021.
 
 ## QCFlutter Talk
 
-- Intro: https://www.youtube.com/watch?v=kAWqZNvLrGg&t=12m15s
-- Walkthrough: https://www.youtube.com/watch?v=kAWqZNvLrGg&t=19m58s
+- Talk: https://www.youtube.com/watch?v=ZbFOqL1fHNo
 - Commit in talk: [27e47ba](https://github.com/lukepighetti/redux_sandbox/tree/27e47bae7688e260fe67405c4c9aac007c487eb9)
 - Firebase architecture repo: https://github.com/lukepighetti/fb_arch
 
